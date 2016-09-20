@@ -1,6 +1,6 @@
 # Lightspeed OnSite API - Sample Integration
  
- This is a sample application to demonstrate the process for connecting to the Lightspeed OnSite API. The code was based on a [custom reporting tool](https://github.com/ottaz/custom-reorder-reporter) created by [Kevin Ottley](https://github.com/ottaz).
+ This is a sample application to demonstrate the process for connecting to the Lightspeed OnSite API. The code is based on a [custom reporting tool](https://github.com/ottaz/custom-reorder-reporter) created by [Kevin Ottley](https://github.com/ottaz).
  
 # API Reference
  
