@@ -8,25 +8,42 @@ checksession();
 
 $rest = new RESTConnector();
 
-$rest->createRequest('products/', 'GET', null, $_SESSION['cookies']);
+// Get all products
+// Remember to include the trailing forward slash after the endpoint or the request will fail
+$rest->createRequest('products/25/', 'GET', null, $_SESSION['cookies']);
 $rest->sendRequest();
 $response = $rest->getResponse();
 $error = $rest->getError();
 $exception = $rest->getException();
 
-
+// Parse the XML response and print to screen
 $xml = simplexml_load_string($response);
-
 echo '<pre>';
 print_r($xml);
 echo '</pre>';
 
-
-// save our session cookies
+// Save our session cookies to avoid consuming more than one user seat
 if ($_SESSION['cookies']==null)
     $_SESSION['cookies'] = $rest->getCookies();
 
-// display any error message
+// Display any error message
+if ($error!=null)
+    die($error);
+
+if ($exception!=null)
+    die($exception);
+
+//
+// Additional requests go here
+//
+
+// POST to session/current/logout/ to logout when we are finished
+$rest->createRequest('sessions/current/logout/', 'POST', null, $_SESSION['cookies']);
+$rest->sendRequest();
+$error = $rest->getError();
+$exception = $rest->getException();
+
+// Display any error message
 if ($error!=null)
     die($error);
 

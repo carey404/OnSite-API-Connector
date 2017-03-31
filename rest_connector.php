@@ -10,13 +10,17 @@ class RESTConnector
     // The Host is the IP address of the Lightspeed server
     // The Port is 9630 by default. Verify under System Preferences > Lightspeed Server
 
-    private $user_agent = 'com.acme.basicwidget/1.0';
-    private $privateID = 'X-PAPPID: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
-    private $username = 'lightspeed_username';
-    private $password = 'lightspeed_password';
+    private $user_agent = 'com.carey.testapp/1.0';
+    private $privateID = 'X-PAPPID: 2b537d57-e7fc-4141-a3c2-0cd37c9db658';
+    private $username = 'lightspeed';
+    private $password = 'lightspeed3';
+    // private $user_agent = 'com.acme.basicwidget/1.0';
+    // private $privateID = 'X-PAPPID: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+    // private $username = 'lightspeed_username';
+    // private $password = 'lightspeed_password';
     private $host = 'localhost';
     private $port = '9630';
-    private $url;
+    private $endpoint;
     private $domain;
     private $method;
     private $requestXml;
@@ -50,9 +54,9 @@ class RESTConnector
         return true;
     }
 
-    public function createRequest($url, $method = 'GET', $body = null, $mycookies = null)
+    public function createRequest($endpoint, $method = 'GET', $body = null, $mycookies = null)
     {
-        $this->url = $this->domain . $url;
+        $this->endpoint = $this->domain . $endpoint;
         $this->requestXml = $body;
         $this->cookieJar = $mycookies;
 
@@ -63,7 +67,7 @@ class RESTConnector
             case "PUT":
             case "LOCK":
             case "UNLOCK":
-		    case "DELETE":
+            case "DELETE":
                 $this->method = $method;
                 $this->arrCurl['CURLOPT_CUSTOMREQUEST'] = $this->method;
                 break;
@@ -76,7 +80,7 @@ class RESTConnector
 
     public function sendRequest()
     {
-        $ch = curl_init($this->url);
+        $ch = curl_init($this->endpoint);
 
         if (!$ch)
             throw new Exception('Failed to initialize curl resource');
@@ -122,7 +126,8 @@ class RESTConnector
         $this->setCookies($result);
     }
 
-    public function getResponse() {
+    public function getResponse()
+    {
         return $this->responseBody;
     }
 
@@ -134,7 +139,8 @@ class RESTConnector
             $this->responseBody = substr($result, strpos($result, '<?xml'));
     }
 
-    public function getError() {
+    public function getError()
+    {
         return $this->httperror;
     }
 
@@ -146,7 +152,8 @@ class RESTConnector
         $this->httperror = substr($result, $startPos, $lengthError);
     }
 
-    public function getException() {
+    public function getException()
+    {
         return $this->exception;
     }
 
@@ -162,6 +169,7 @@ class RESTConnector
     {
         return $this->cookieJar;
     }
+
 }
 
 ?>

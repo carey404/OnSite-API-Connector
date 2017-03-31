@@ -8,20 +8,19 @@
 
 
 function checksession(){
-	
+
 	session_start();
 
 	// are we starting a session for the very first time?
-	if ($_SESSION['idle']) {
-		
-		
+	if (isset($_SESSION['idle'])) {
+
 		if (time() >= $_SESSION['idle']){
 			$_SESSION['expired'] = true;
 		}
 		else {
 			$_SESSION['idle'] = time()+15*60;
 		}
-	
+
 
 		if ($_SESSION['expired'] == true ){
 			$_SESSION = array();
@@ -30,16 +29,16 @@ function checksession(){
 			$_SESSION['idle'] = time()+15*60;
 			$_SESSION['expired'] = false;
 			$_SESSION['cookies'] = null;
-		} 
+		}
 	}
-	
-	// set idle and expired time since this is the very first session	
+
+	// set idle and expired time since this is the very first session
 	else {
 		$_SESSION['idle'] = time()+15*60;
 		$_SESSION['expired'] = false;
 		$_SESSION['cookies'] = null;
 	}
-	
+
 }
 
 ?>
