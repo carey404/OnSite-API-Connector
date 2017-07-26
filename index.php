@@ -10,7 +10,7 @@ $rest = new RESTConnector();
 
 // Get all products
 // Remember to include the trailing forward slash after the endpoint or the request will fail
-$rest->createRequest('products/25/', 'GET', null, $_SESSION['cookies']);
+$rest->createRequest('products/', 'GET', null, $_SESSION['cookies']);
 $rest->sendRequest();
 $response = $rest->getResponse();
 $error = $rest->getError();
