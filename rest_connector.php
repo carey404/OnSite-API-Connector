@@ -10,14 +10,10 @@ class RESTConnector
     // The Host is the IP address of the Lightspeed server
     // The Port is 9630 by default. Verify under System Preferences > Lightspeed Server
 
-    private $user_agent = 'com.carey.testapp/1.0';
-    private $privateID = 'X-PAPPID: 2b537d57-e7fc-4141-a3c2-0cd37c9db658';
-    private $username = 'lightspeed';
-    private $password = 'lightspeed3';
-    // private $user_agent = 'com.acme.basicwidget/1.0';
-    // private $privateID = 'X-PAPPID: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
-    // private $username = 'lightspeed_username';
-    // private $password = 'lightspeed_password';
+    private $user_agent = 'com.acme.basicwidget/1.0';
+    private $privateID = 'X-PAPPID: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+    private $username = 'lightspeed_username';
+    private $password = 'lightspeed_password';
     private $host = 'localhost';
     private $port = '9630';
     private $endpoint;
@@ -94,6 +90,9 @@ class RESTConnector
         curl_setopt($ch, CURLOPT_USERPWD, $this->username . ':' . $this->password);
 
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
+        if (in_array($this->method, ['POST', 'PUT'])) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->requestXml);
+        }
 
         $fp = fopen(dirname(__FILE__).'/errorlog.txt', 'w');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
